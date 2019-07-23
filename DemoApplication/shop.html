@@ -1,0 +1,80 @@
+html>
+    <head>
+    <script>
+        
+function getdetail()
+{    var j=0
+    url=`http://localhost:8080/items/display`
+    fetch(url)
+    .then(res=>res.json())
+    .then(data=>{
+
+        createTable(data);
+    })
+    const createTable = (data)=>{
+
+        let rows = '';
+
+        data.product.forEach(u => {
+            j++
+
+            rows += `<tr>
+
+                        
+                        <td id="">${j}</td>
+                        <td>${u.name}</td>
+                        <td>${u.brand}</td>
+
+                        <td>${u.price}</td>
+                        <td><input type="button" value="add to cart" onclick="addcart(${j})"></td>
+                        <td></td>
+
+
+                    </tr>`
+
+        });
+
+        const _table = `<table>
+
+                            <tr>
+                                <th>ID</th>
+                                <th>name</th>
+
+                                <th>brand</th>
+
+                                <th>price</th>
+
+                                
+
+                            </tr>
+
+                            ${rows}
+
+                        </table>`
+
+        document.getElementById('users').innerHTML = _table;
+
+
+    }
+}
+   function addcart(id)
+   {
+     product_id=id
+     
+    url=`http://localhost:8080/items/search/${product_id}`
+    fetch(url)
+    .then(res=>res.json())
+
+
+
+
+
+   }
+    </script>
+</head>
+<body onload="getdetail()">
+    <div id="users"></div>
+    <div><a href="./checkout.html" >checkout</a></div>
+
+</body>
+</html>
